@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraFlow System Workspace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="canvas-container">
+        <div class="glowing-orb orb-1"></div>
+        <div class="glowing-orb orb-2"></div>
+        <div class="faux-3d-object" id="interactive-object"></div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <div id="boot-screen">
+        <div class="sharingan-wrapper">
+            <svg viewBox="0 0 100 100" class="madara-ems">
+                <circle cx="50" cy="50" r="48" fill="#a60303" stroke="#0f0f0f" stroke-width="4"/>
+                <g stroke="#0f0f0f" stroke-width="10" stroke-linecap="round">
+                    <line x1="50" y1="50" x2="50" y2="4" />
+                    <line x1="50" y1="50" x2="10" y2="73" />
+                    <line x1="50" y1="50" x2="90" y2="73" />
+                </g>
+                <g fill="none" stroke="#0f0f0f" stroke-width="8">
+                    <ellipse cx="50" cy="27" rx="16" ry="24" transform="rotate(0 50 50)" />
+                    <ellipse cx="50" cy="27" rx="16" ry="24" transform="rotate(120 50 50)" />
+                    <ellipse cx="50" cy="27" rx="16" ry="24" transform="rotate(240 50 50)" />
+                </g>
+                <circle cx="50" cy="50" r="10" fill="#0f0f0f" />
+                <circle cx="50" cy="50" r="4" fill="#a60303" />
+            </svg>
+        </div>
+        <h2 class="boot-text">MUGEN TSUKUYOMI</h2>
+        <p class="boot-subtext">Awakening the System...</p>
+    </div>
+
+    <div id="auth-container" class="login-wrapper">
+        <div class="exclusive-card glass-panel">
+            <div class="header-text">
+                <h3>System Access</h3>
+                <h1>Sign In</h1>
+            </div>
+            <div class="login-form">
+                <input type="text" id="username" class="dark-input" placeholder="User ID / Email">
+                <input type="password" id="password" class="dark-input" placeholder="Password">
+                <button class="btn-primary" style="width:100%; margin-top:10px;" onclick="login()">Authenticate</button>
+                <p id="login-error" class="error-msg">Invalid Credentials</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="dashboard-container" class="dashboard-layout hidden">
+        
+        <aside class="sidebar glass-panel-sidebar">
+            <div class="brand">
+                <i class="fas fa-eye" style="color:var(--accent-pink); margin-right: 10px;"></i>
+                AuraFlow
+            </div>
+            <nav class="menu">
+                <a href="#" onclick="showSection('home')" id="nav-home" class="active">
+                    <i class="fas fa-layer-group"></i> Dashboard
+                </a>
+                
+                <div id="admin-links" class="hidden">
+                    <a href="#" onclick="showSection('manage')" id="nav-manage"><i class="fas fa-users-cog"></i> Users & Access</a>
+                </div>
+                <div id="teacher-links" class="hidden">
+                    <a href="#" onclick="showSection('tools')" id="nav-tools"><i class="fas fa-chalkboard-teacher"></i> Class Hub</a>
+                </div>
+                <div id="student-links" class="hidden">
+                     <a href="#" onclick="showSection('student-tools')" id="nav-stools"><i class="fas fa-book-reader"></i> My Learning</a>
+                </div>
+                <div id="dev-links" class="hidden">
+                    <a href="#" onclick="showSection('developer')" id="nav-dev"><i class="fas fa-terminal"></i> Console</a>
+                </div>
+            </nav>
+
+            <div id="return-section" class="hidden" style="margin-top: auto; padding: 20px;">
+                <button onclick="returnToAdmin()" class="btn-action btn-green" style="width:100%;"><i class="fas fa-undo-alt"></i> Return to Admin</button>
+            </div>
+
+            <a href="#" onclick="logout()" id="logout-btn" class="logout-link"><i class="fas fa-sign-out-alt"></i> End Session</a>
+        </aside>
+
+        <main class="main-content">
+            
+            <div id="section-home" class="content-section">
+                <div id="master-panel" class="hidden">
+                    <h2 id="welcome-msg-master">Dashboard</h2>
+                    <p class="sub-header" style="color:var(--text-muted); margin-bottom: 30px;">Global System Overview</p>
+                    <div class="tool-card glass-panel border-accent-blue">
+                        <h4><i class="fas fa-shield-alt" style="color:var(--accent-blue);"></i> Surveillance Log</h4>
+                        <ul id="surveillance-log" class="simple-list"><li>No active meetings.</li></ul>
+                    </div>
+                </div>
+                <div id="generic-welcome" class="hidden">
+                    <h2 id="welcome-msg">Welcome to AuraFlow</h2>
+                    <p style="color:var(--text-muted);">Please select a module from the sidebar menu to continue.</p>
+                </div>
+            </div>
+
+            <div id="section-manage" class="content-section hidden">
+                <h3>Provision New Account</h3>
+                <div class="tool-card glass-panel add-user-row" style="margin-bottom: 30px;">
+                    <input type="text" id="new-name" class="tool-input" placeholder="Full Legal Name">
+                    <input type="text" id="new-user" class="tool-input" placeholder="System ID">
+                    <select id="new-role" class="tool-input" onchange="toggleAdminFields(this.value)">
+                        <option value="Student">Student</option>
+                        <option value="Teacher">Teacher</option>
+                        <option value="Admin">Administrator</option>
+                    </select>
+                    
+                    <div id="field-student" style="display:flex; gap:10px; width:100%;">
+                        <input type="text" id="new-class" class="tool-input" placeholder="Grade">
+                        <input type="text" id="new-sec" class="tool-input" placeholder="Sec">
+                    </div>
+                    <div id="field-teacher" class="hidden" style="display:flex; gap:10px; width:100%;">
+                        <input type="text" id="new-subject" class="tool-input" placeholder="Subject">
+                        <input type="text" id="new-class-teacher" class="tool-input" placeholder="Homeroom">
+                    </div>
+
+                    <button class="btn-primary" style="margin-top:10px;" onclick="registerUser()"><i class="fas fa-plus"></i> Create Profile</button>
+                </div>
+                
+                <h3 style="margin-top:40px;">Directory Database</h3>
+                <div id="user-list" class="db-list"></div>
+            </div>
+
+            <div id="section-tools" class="content-section hidden">
+                <h3>Teacher Hub</h3>
+                
+                <div class="tool-card glass-panel border-accent-blue" style="margin-bottom:25px;">
+                    <h4><i class="fas fa-award"></i> Academic Records</h4>
+                    <div class="flex-row-gap">
+                        <input type="text" id="rm-search" placeholder="Enter Student ID or Name" class="tool-input">
+                    </div>
+                    <div class="flex-row-gap">
+                        <input type="text" id="rm-sub" placeholder="Subject Name" class="tool-input">
+                        <input type="number" id="rm-score" placeholder="Score/100" class="tool-input">
+                        <button class="btn-primary" onclick="addMarks()">Save Record</button>
+                        <button class="btn-action btn-red" onclick="clearMarks()">Wipe Records</button>
+                    </div>
+                </div>
+
+                <div class="tool-card glass-panel border-accent-green" style="margin-bottom:25px;">
+                    <h4><i class="fas fa-users"></i> Attendance Manager</h4>
+                    <div class="flex-row-gap">
+                        <input type="text" id="t-filter-class" placeholder="Grade Level" class="tool-input" style="max-width: 150px;">
+                        <input type="text" id="t-filter-sec" placeholder="Section" class="tool-input" style="max-width: 150px;">
+                        <button class="btn-action btn-green" onclick="loadClassroom()"><i class="fas fa-filter"></i> Fetch List</button>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="timetable-table">
+                            <thead><tr><th>Student ID</th><th>Legal Name</th><th>Quick Action</th></tr></thead>
+                            <tbody id="classroom-list"><tr><td colspan="3" style="text-align:center; padding: 20px; color:#a09eb5;">Select parameters to fetch roster.</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="tool-card glass-panel border-accent-pink">
+                        <h4><i class="fas fa-video"></i> Broadcast Session</h4>
+                        <input type="text" id="m-topic" placeholder="Session Topic" class="tool-input">
+                        <input type="text" id="m-link" placeholder="Conference URL" class="tool-input">
+                        <button class="btn-primary" style="width:100%; margin-top:10px;" onclick="createMeeting()"><i class="fas fa-play"></i> Initiate Broadcast</button>
+                    </div>
+
+                    <div class="tool-card glass-panel border-accent-purple">
+                        <h4><i class="fas fa-calendar-alt"></i> Weekly Matrix</h4>
+                        <table class="timetable-table" style="margin-top:0;">
+                            <thead><tr><th>Day</th><th>Block</th><th>Subject</th><th>Staff</th></tr></thead>
+                            <tbody id="t-timetable-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section-student-tools" class="content-section hidden">
+                <h3>My Learning Space</h3>
+                
+                <div class="tool-card glass-panel border-accent-pink" style="margin-bottom:25px;">
+                    <h4><i class="fas fa-broadcast-tower"></i> Live Transmissions</h4>
+                    <ul id="s-meeting-list" class="simple-list"><li>No sessions currently active.</li></ul>
+                </div>
+                
+                <div class="dashboard-grid" style="margin-bottom:25px;">
+                    <div class="tool-card glass-panel border-accent-blue">
+                        <h4><i class="fas fa-inbox"></i> Communication Hub</h4>
+                        <ul id="s-msg-list" class="simple-list"></ul>
+                    </div>
+                    <div class="tool-card glass-panel border-accent-purple">
+                        <h4><i class="fas fa-folder-open"></i> Resource Drive</h4>
+                        <ul id="s-file-list" class="simple-list"></ul>
+                    </div>
+                </div>
+                
+                <div class="tool-card glass-panel border-accent-green">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 15px;">
+                        <h4 style="margin:0;"><i class="fas fa-chart-line"></i> Performance Analytics</h4>
+                        <div class="pct-badge">Aggregate: <span id="s-overall-pct">0%</span></div>
+                    </div>
+                    <table class="timetable-table">
+                        <thead><tr><th>Discipline</th><th>Achieved Score</th><th>Standing</th></tr></thead>
+                        <tbody id="s-report-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="section-developer" class="content-section hidden">
+                <h2 style="color:var(--text-main);"><i class="fas fa-terminal"></i> System Terminal</h2>
+                <div class="dashboard-grid">
+                    <div class="tool-card glass-panel border-accent-blue">
+                        <h4>Force Push Entity</h4>
+                        <input type="text" id="dev-s-id" placeholder="Entity ID" class="tool-input">
+                        <input type="text" id="dev-s-name" placeholder="Entity Name" class="tool-input">
+                        <div class="flex-row-gap" style="margin-top:10px;">
+                            <input type="text" id="dev-s-class" placeholder="Grade Node" class="tool-input">
+                            <input type="text" id="dev-s-sec" placeholder="Sector Node" class="tool-input">
+                        </div>
+                        <button class="btn-primary" style="width:100%;" onclick="devAddStudent()">Execute Insertion</button>
+                    </div>
+                    <div class="tool-card glass-panel border-accent-purple">
+                        <h4>Modify Time Matrix</h4>
+                        <input type="text" id="dev-t-name" placeholder="Staff Designation" class="tool-input">
+                        <div class="flex-row-gap" style="margin-top:10px; margin-bottom:10px;">
+                            <select id="dev-tt-day" class="tool-input">
+                                <option>Mo</option><option>Tu</option><option>We</option><option>Th</option><option>Fr</option><option>Sa</option>
+                            </select>
+                            <select id="dev-tt-time" class="tool-input">
+                                <option value="1">Block 1</option><option value="2">Block 2</option>
+                                <option value="3">Block 3</option><option value="4">Block 4</option>
+                                <option value="5">Block 5</option>
+                            </select>
+                        </div>
+                        <input type="text" id="dev-tt-sub" placeholder="Subject Node" class="tool-input" style="margin-bottom:10px;">
+                        <div style="display:flex; gap:10px;">
+                            <button class="btn-primary" style="flex:1;" onclick="devAddTimetable()">Write</button>
+                            <button class="btn-action btn-red" style="flex:1;" onclick="clearTimetable()">Purge</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="tool-card glass-panel border-accent-green" style="margin-top:25px;">
+                    <h4>Matrix Commit History</h4>
+                    <ul id="dev-tt-log" class="simple-list"><li>System clean.</li></ul>
+                </div>
+            </div>
+
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+  </html>
+                      
