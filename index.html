@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kisan Mitra</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-mark">🌾</div>
+                <div>
+                    <span class="brand-name">Kisan Mitra</span>
+                </div>
+            </div>
+
+            <button class="nav-btn active" data-target="home">
+                <span class="icon">🏠</span>
+                <span>Home</span>
+            </button>
+            <button class="nav-btn" data-target="schemes">
+                <span class="icon">📄</span>
+                <span>Schemes</span>
+            </button>
+            <button class="nav-btn" data-target="products">
+                <span class="icon">🛒</span>
+                <span>Products</span>
+            </button>
+            <button class="nav-btn" data-target="profile">
+                <span class="icon">👤</span>
+                <span>Profile</span>
+            </button>
+        </aside>
+
+        <main class="content">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">Farmer support</p>
+                    <h1>Kisan Mitra</h1>
+                </div>
+                <div class="topbar-actions">
+                    <button class="cta-btn secondary">Get help</button>
+                    <button class="cta-btn ai-btn" id="aiDoctorBtn">AI Doctor</button>
+                </div>
+            </header>
+
+            <section class="panel active" id="home">
+                <div class="welcome-card">
+                    <div>
+                        <p class="label">Welcome</p>
+                        <h2>Hello, farmer!</h2>
+                        <p>Everything you need for a better harvest is here.</p>
+                    </div>
+                    <div class="weather-box">
+                        <span>☀️</span>
+                        <div>
+                            <strong>28°C</strong>
+                            <small>Sunny day</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="assistant-banner">
+                    <div>
+                        <p class="label small">Smart crop care</p>
+                        <h3>Need advice for your crop?</h3>
+                    </div>
+                    <button class="assistant-btn" id="assistantBtn">AI Doctor</button>
+                </div>
+
+                <!-- AI Doctor Diagnostic Panel -->
+                <div class="doctor-panel" id="doctorPanel">
+                    <div class="doctor-header">
+                        <span class="doctor-badge">🩺</span>
+                        <div>
+                            <h3>AI Crop Doctor</h3>
+                            <p>Upload a clear image of affected plant leaves or describe symptoms for analysis.</p>
+                        </div>
+                    </div>
+
+                    <!-- Image Upload Section -->
+                    <div class="doctor-upload-section">
+                        <label for="cropImageInput" class="upload-dropzone">
+                            <span class="upload-icon">📷</span>
+                            <span>Click or drag leaf photo here to upload</span>
+                            <input type="file" id="cropImageInput" accept="image/*" />
+                        </label>
+                        <div id="imagePreviewContainer" class="image-preview-container" style="display: none;">
+                            <img id="imagePreview" src="" alt="Crop Sample Preview" />
+                            <button id="removeImageBtn" class="remove-img-btn" type="button">✕ Remove</button>
+                        </div>
+                    </div>
+
+                    <div class="doctor-suggestions">
+                        <button type="button" data-query="Yellow spots on leaves with brown edges">Yellow leaves</button>
+                        <button type="button" data-query="Leaves wilting and soil surface dry">Low moisture</button>
+                        <button type="button" data-query="Small holes on leaves and white insects under leaves">Pest alert</button>
+                    </div>
+
+                    <div class="doctor-input-group">
+                        <input type="text" id="doctorInput" placeholder="Describe symptoms or query..." />
+                        <button id="analyzeBtn" class="cta-btn">Diagnose Crop</button>
+                    </div>
+
+                    <div id="doctorResponse" class="doctor-response" style="display: none;">
+                        <div class="response-title">Diagnosis Results</div>
+                        <div id="responseContent"></div>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <article class="stat-card green">
+                        <span>🌱</span>
+                        <h3>Crop Health</h3>
+                        <strong>92%</strong>
+                    </article>
+                    <article class="stat-card blue">
+                        <span>💧</span>
+                        <h3>Water</h3>
+                        <strong>4.2 L</strong>
+                    </article>
+                    <article class="stat-card orange">
+                        <span>📈</span>
+                        <h3>Market</h3>
+                        <strong>₹12,500</strong>
+                    </article>
+                </div>
+
+                <div class="quick-actions">
+                    <article class="action-card">
+                        <span>🌾</span>
+                        <h3>Crop Advice</h3>
+                        <p>Best care tips for today.</p>
+                    </article>
+                    <article class="action-card">
+                        <span>📜</span>
+                        <h3>Schemes</h3>
+                        <p>Check government support.</p>
+                    </article>
+                    <article class="action-card">
+                        <span>🧺</span>
+                        <h3>Buy Inputs</h3>
+                        <p>Seeds, tools, and fertilizers.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="panel" id="schemes">
+                <h2>Government Schemes</h2>
+                <div class="info-list">
+                    <div class="info-item">
+                        <span>✅</span>
+                        <div>
+                            <h3>PM-Kisan</h3>
+                            <p>Direct financial support for eligible farmers.</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <span>✅</span>
+                        <div>
+                            <h3>Soil Health Card</h3>
+                            <p>Get soil analysis and fertilizer guidance.</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <span>✅</span>
+                        <div>
+                            <h3>Crop Insurance</h3>
+                            <p>Protection against crop loss due to weather.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel" id="products">
+                <h2>Products</h2>
+                <div class="cards-grid">
+                    <article class="mini-card">
+                        <span>🌱</span>
+                        <h3>Seeds</h3>
+                        <p>High-quality seasonal seeds.</p>
+                    </article>
+                    <article class="mini-card">
+                        <span>🧪</span>
+                        <h3>Fertilizer</h3>
+                        <p>Plant-friendly nutrition blend.</p>
+                    </article>
+                    <article class="mini-card">
+                        <span>🚜</span>
+                        <h3>Machinery</h3>
+                        <p>Affordable agricultural tools.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="panel" id="profile">
+                <h2>Farmer Profile</h2>
+                <div class="profile-card">
+                    <div class="avatar">👨‍🌾</div>
+                    <div>
+                        <h3>Rahul Kumar</h3>
+                        <p>Village: Rampur</p>
+                        <p>Crop focus: Wheat and Rice</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- External JavaScript File -->
+    <script src="script.js"></script>
+</body>
+</html>
